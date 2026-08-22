@@ -1,1 +1,6 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Project - Ali - Portfolio</title><link rel="icon" type="image/png" href="assets/favicon.png"><link rel="stylesheet" href="style.css"></head><body><header class="site-header"><a class="brand" href="index.html">Ali<span>.</span></a><button class="menu-toggle" aria-expanded="false" aria-controls="nav">Menu</button><nav id="nav"><a href="index.html">Home</a><a href="about.html">About</a><a class="active" href="work.html">Work</a><a href="contact.html">Contact</a></nav></header><main id="project"></main><footer><a class="brand" href="index.html">Ali<span>.</span></a><p>Have a project in mind?</p><a href="contact.html">Get in touch <b>↗</b></a></footer><script src="main.js"></script></body></html>
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Project - Ali - Portfolio</title><script>
+var id = new URLSearchParams(location.search).get('id');
+location.replace('/work/' + (id ? ('?id=' + encodeURIComponent(id)) : ''));
+</script></head>
+<body><noscript><meta http-equiv="refresh" content="0;url=/work/"></noscript><p>Redirecting to <a href="/work/">aliasgeradamally.com/work/</a>&hellip;</p></body></html>

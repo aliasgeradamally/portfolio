@@ -52,3 +52,24 @@ if (workMain) {
     workMain.innerHTML = `<section class="project-hero ${p.accent}"><div><p class="kicker">${p.type}</p><h1>${p.title}</h1><p class="lede">${p.intro}</p><p class="project-role">${p.role}</p>${links}${resource}</div><div class="project-hero-image"><img src="${p.hero}" alt="${p.title.replace(/<[^>]+>/g,'')}"></div></section><section class="project-note"><p class="kicker">The approach</p><h2>${p.note}</h2></section>${p.images.length ? `<section class="project-gallery ${p.gallery || ''} ${p.images.length === 1 ? 'one' : ''}">${p.images.map((src,i)=>`<figure class="gallery-${i+1}"><img src="${src}" alt="${p.title.replace(/<[^>]+>/g,'')} detail ${i+1}"></figure>`).join('')}</section>` : ''}<section class="next-project"><p class="kicker">Keep exploring</p><a href="/work/">All selected work <b>↗</b></a></section>`;
   }
 }
+
+/* Portfolio motion enhancement: remove this block and the matching CSS block to disable site motion. */
+const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+if (!reducedMotion.matches) {
+  document.documentElement.classList.add('motion-enabled');
+  const motionTargets = document.querySelectorAll('.hero h1, .page-intro h1, .about-hero h1, .contact-hero h1, .project-hero h1, .internship-copy h1, .feature-project, .project-split article, .work-card');
+  motionTargets.forEach((target) => target.classList.add('motion-reveal'));
+  if ('IntersectionObserver' in window) {
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    motionTargets.forEach((target) => revealObserver.observe(target));
+  } else {
+    motionTargets.forEach((target) => target.classList.add('is-visible'));
+  }
+}

@@ -54,13 +54,19 @@ if (workMain) {
 }
 
 /* Portfolio motion enhancement: remove this block and the matching CSS block to disable site motion. */
-const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
-if (!reducedMotion.matches) {
-  document.documentElement.classList.add('motion-enabled');
-  const motionTargets = document.querySelectorAll('.hero h1, .page-intro h1, .about-hero h1, .contact-hero h1, .project-hero h1, .internship-copy h1, .feature-project, .project-split article, .work-card');
-  motionTargets.forEach((target) => target.classList.add('motion-reveal'));
+const systemReducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+const motionTargets = document.querySelectorAll('.hero h1, .page-intro h1, .about-hero h1, .contact-hero h1, .project-hero h1, .internship-copy h1, .feature-project, .project-split article, .work-card');
+let revealObserver;
+const setMotion = (enabled) => {
+  revealObserver?.disconnect();
+  document.documentElement.classList.toggle('motion-enabled', enabled);
+  motionTargets.forEach((target) => target.classList.toggle('motion-reveal', enabled));
+  if (!enabled) {
+    motionTargets.forEach((target) => target.classList.remove('is-visible'));
+    return;
+  }
   if ('IntersectionObserver' in window) {
-    const revealObserver = new IntersectionObserver((entries, observer) => {
+    revealObserver = new IntersectionObserver((entries, observer) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           entry.target.classList.add('is-visible');
@@ -72,4 +78,19 @@ if (!reducedMotion.matches) {
   } else {
     motionTargets.forEach((target) => target.classList.add('is-visible'));
   }
+};
+const savedMotion = localStorage.getItem('ali-motion');
+const motionEnabled = savedMotion === null ? !systemReducedMotion.matches : savedMotion === 'on';
+setMotion(motionEnabled);
+if (header) {
+  const motionToggle = document.createElement('button');
+  motionToggle.className = 'motion-toggle'; motionToggle.type = 'button';
+  const setMotionLabel = (enabled) => { motionToggle.textContent = enabled ? 'Motion: On' : 'Motion: Off'; motionToggle.setAttribute('aria-pressed', String(enabled)); };
+  setMotionLabel(motionEnabled);
+  motionToggle.addEventListener('click', () => {
+    const enabled = !document.documentElement.classList.contains('motion-enabled');
+    localStorage.setItem('ali-motion', enabled ? 'on' : 'off');
+    setMotion(enabled); setMotionLabel(enabled);
+  });
+  document.body.append(motionToggle);
 }

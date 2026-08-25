@@ -79,18 +79,5 @@ const setMotion = (enabled) => {
     motionTargets.forEach((target) => target.classList.add('is-visible'));
   }
 };
-const savedMotion = localStorage.getItem('ali-motion');
-const motionEnabled = savedMotion === null ? !systemReducedMotion.matches : savedMotion === 'on';
+const motionEnabled = !systemReducedMotion.matches;
 setMotion(motionEnabled);
-if (header) {
-  const motionToggle = document.createElement('button');
-  motionToggle.className = 'motion-toggle'; motionToggle.type = 'button';
-  const setMotionLabel = (enabled) => { motionToggle.textContent = enabled ? 'Motion: On' : 'Motion: Off'; motionToggle.setAttribute('aria-pressed', String(enabled)); };
-  setMotionLabel(motionEnabled);
-  motionToggle.addEventListener('click', () => {
-    const enabled = !document.documentElement.classList.contains('motion-enabled');
-    localStorage.setItem('ali-motion', enabled ? 'on' : 'off');
-    setMotion(enabled); setMotionLabel(enabled);
-  });
-  document.body.append(motionToggle);
-}

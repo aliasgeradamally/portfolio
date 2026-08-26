@@ -1,0 +1,14 @@
+{
+  "name": "Aliasger Adamally — Multidisciplinary Creative",
+  "short_name": "Ali",
+  "icons": [
+    {
+      "src": "/assets/favicon.png?v=20260838",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "background_color": "#f3efe7",
+  "theme_color": "#18181a",
+  "display": "browser"
+}

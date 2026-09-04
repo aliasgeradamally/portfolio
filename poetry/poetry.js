@@ -1,5 +1,7 @@
 /* Poetry page interaction: one paper letter opens at a time. */
-const poems = [...document.querySelectorAll('.poetry-page .poem')];
+const poems = [...document.querySelectorAll('.poetry-page .poem')].reverse();
+
+poems.forEach((poem) => poem.parentElement?.append(poem));
 
 poems.forEach((poem, index) => {
   const title = poem.querySelector('h2');
@@ -33,7 +35,7 @@ poems.forEach((poem, index) => {
       poem.classList.add('is-open');
       trigger.setAttribute('aria-expanded', 'true');
       body.setAttribute('aria-hidden', 'false');
-      setTimeout(() => poem.scrollIntoView({ behavior: 'smooth', block: 'start' }), 90);
+      requestAnimationFrame(() => poem.scrollIntoView({ behavior: 'smooth', block: 'start' }));
     }
   });
 });

@@ -1,3 +1,14 @@
+/* Poetry menu addition: remove this block to remove the poetry link site-wide. */
+const primaryNav = document.querySelector('#nav');
+if (primaryNav && !primaryNav.querySelector('a[href="/poetry/"]')) {
+  const poetryLink = document.createElement('a');
+  poetryLink.href = '/poetry/';
+  poetryLink.textContent = 'Poetry';
+  if (location.pathname === '/poetry/' || location.pathname === '/poetry') poetryLink.className = 'active';
+  const contactLink = primaryNav.querySelector('a[href="/contact/"]');
+  primaryNav.insertBefore(poetryLink, contactLink || null);
+}
+
 const menu = document.querySelector('.menu-toggle');
 if (menu) menu.addEventListener('click', () => { document.body.classList.toggle('menu-open'); menu.setAttribute('aria-expanded', document.body.classList.contains('menu-open')); });
 

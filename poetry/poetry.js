@@ -3,7 +3,8 @@ const collection = document.querySelector('.poetry-page .poetry-collection');
 
 if (collection) {
   const poems = [...collection.querySelectorAll('.poem')].reverse();
-  const desktopLayout = window.matchMedia('(min-width: 900px)');
+  // Each desktop letter needs enough width for the author's Urdu line breaks.
+  const desktopLayout = window.matchMedia('(min-width: 1200px)');
   const columns = [0, 1].map(() => {
     const column = document.createElement('div');
     column.className = 'poetry-column';

@@ -2,33 +2,6 @@
 const collection = document.querySelector('.poetry-page .poetry-collection');
 
 if (collection) {
-  const entries = Array.isArray(window.POETRY_ENTRIES) ? window.POETRY_ENTRIES : [];
-
-  entries.forEach((entry) => {
-    if (!entry || typeof entry.title !== 'string' || !Array.isArray(entry.verses)) return;
-
-    const article = document.createElement('article');
-    article.className = `poem${entry.format === 'urdu-letter' ? ' urdu-letter' : ''}${entry.long ? ' long' : ''}`;
-
-    const title = document.createElement('h2');
-    title.textContent = entry.title;
-    article.append(title);
-
-    entry.verses.forEach((verse) => {
-      if (!verse || typeof verse.text !== 'string') return;
-
-      const text = document.createElement('div');
-      text.className = `verse${verse.style === 'roman' ? ' roman' : ''}`;
-      text.textContent = verse.text;
-      if (verse.language) text.lang = verse.language;
-      if (verse.direction) text.dir = verse.direction;
-      else if (verse.language === 'ur') text.dir = 'rtl';
-      article.append(text);
-    });
-
-    collection.append(article);
-  });
-
   const poems = [...collection.querySelectorAll('.poem')].reverse();
   // Each desktop letter needs enough width for the author's Urdu line breaks.
   const desktopLayout = window.matchMedia('(min-width: 1200px)');
